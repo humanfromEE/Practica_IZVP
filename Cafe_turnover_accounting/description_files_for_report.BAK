@@ -1,0 +1,47 @@
+ЗАПИТИ
+Замовлення де є 5 страв і сума більше 500 грн order_where_five_dish_and_summ_more_500_query.qpr
+Кількість страв, де є продукт головним count_product_is_head_product_of_dish_query.qpr
+Назва продуктів, які були головним продуктом страви хоч раз name_product_is_dish_head_product_query.qpr
+Назва продуктів, які не були головним продуктом страви ні разу 	name_product_is_not_dish_head_product_query.qpr
+Замовлення з сумою і датою за певними межами order_with_summ_and_date_in_range_query.qpr
+Види страв, де є страви у яких є у складі лимон type_dish_where_dish_with_lemon_query.qpr
+Працівники, зарплати яких є вище середньої salary_worker_more_equal_avarage_salary_query.qpr
+Постачальники, які мають адресу у Львові providers_in_lviv_query.qpr
+Ціна продуктів більш рівна ціні стравам з цим продуктом price_product_equal_price_dish_query.qpr
+Сума кожної поставки продуктів summ_every_supply_product_query.qpr
+Кількість постачань продуктів за увесь час count_supply_product_all_the_time_query.qpr
+Кількість замовлень за увесь час count_order_all_the_time_query.qpr
+Сума кожного завмолення summ_every_order_query.qpr
+
+ЗВІТИ
+Інформація про страви - dish_info_report.frx
+Меню - menu_local_view_report.frx
+Інформація про продукти за їх видами - product_group_type_product_report.frx
+Звіт про зарплати працівників - worker_salary_report.frx
+
+ФОРМИ
+Увід й редагування страв - dish_form.scx
+Переглядач страв - dish_viewer_form.scx
+Увід й редагування замолення - order_form.scx
+Переглядач замовлень - 
+Отримати дані замовлення - 
+Увід й редагування продуктів - 
+Переглядач продуктів - 
+Увід й редагування остачальників - 
+Увід й редагування постачань - 
+Переглядач постачань - 
+Отримати дані постачання - 
+Увід й ридагування видів страв - 
+Увід й редагування видів продуктів - 
+Увід й редагування робітників - 
+
+ПРОГРАМИ
+Долучення даних до страв - append_data_dish_table_program.prg
+Долучення даних до замовлень - append_data_order_table_program.prg
+Долучення даних до продуктів - append_data_product_table_program.prg
+Долучення даних до постачань - append_data_supply_product_table_program.prg
+Детальна інформація про страви - dish_info_report_program.prg
+Детальна інформація про замовлення - order_info_program.prg
+Детальна інформація про постачання - supply_product_info_program.prg
+Детальна інформація про зарплату - worker_salary_report_program.prg
+

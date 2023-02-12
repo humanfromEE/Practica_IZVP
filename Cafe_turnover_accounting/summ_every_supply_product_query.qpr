@@ -1,0 +1,8 @@
+SELECT Supply_product_table.code_sp AS код_постачання,;
+  SUM(Product_table.price_p) AS сума_постачання;
+ FROM ;
+     product_table ;
+    INNER JOIN supply_product_table ;
+   ON  ( code_p ) = ( code_p_sp );
+ GROUP BY Supply_product_table.code_sp
+
