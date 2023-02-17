@@ -1,0 +1,32 @@
+CLOSE ALL TABLES
+
+ON KEY LABEL CTRL+Y APPEND BLANK
+
+SELECT a
+USE dish_table
+SET ORDER TO TAG code_d
+GOTO TOP
+
+SELECT b
+USE worker_table
+SET ORDER TO TAG code_w
+GOTO TOP
+
+SELECT c
+USE order_table
+SET RELATION TO code_d_o INTO a, code_w_o INTO b
+
+BROWSE TITLE 'Таблиця ЗАМОВЛЕННЯ - Додавання даних: CTRL+Y; Вихід: Escape';
+	FIELDS;
+		code_o:H = 'Код_замовлення',;
+		code_d_o:H = 'Код_страви',;
+		a->name_d:H = 'Назва_страви':R,;
+		code_w_o:H = 'Код_працівника',;
+		b->fullname_w:H = 'ПІП_працівника':R,;
+		date_o:H = 'Дата_замовлення'
+
+PACK
+
+CLOSE ALL 
+
+RETURN

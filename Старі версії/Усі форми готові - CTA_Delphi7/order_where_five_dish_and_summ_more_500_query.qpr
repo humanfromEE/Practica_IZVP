@@ -1,0 +1,8 @@
+SELECT Order_table.code_o AS код_замовлення,;
+  SUM(Dish_table.price_d) AS сума_замовлення;
+ FROM ;
+     database_file!dish_table ;
+    INNER JOIN database_file!order_table ;
+   ON  Dish_table.code_d = Order_table.code_d_o;
+ GROUP BY Order_table.code_o;
+ HAVING  SUM(Dish_table.price_d) > ( 500 )

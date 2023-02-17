@@ -1,0 +1,7 @@
+SELECT Product_table.code_p AS код_продукту,;
+  Product_table.name_p AS назва_продукту,;
+  Product_table.price_p AS ціна_продукту;
+ FROM ;
+     product_table;
+ WHERE  ( price_p ) IN (SELECT price_d FROM dish_table INNER JOIN product_table ON code_p = code_p_d WHERE price_d = price_p);
+ ORDER BY Product_table.price_p DESC

@@ -1,0 +1,21 @@
+object frmChildOrder: TfrmChildOrder
+  Left = 192
+  Top = 117
+  Width = 928
+  Height = 480
+  Caption = #1047#1072#1084#1086#1074#1083#1077#1085#1085#1103
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Position = poDefault
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+end

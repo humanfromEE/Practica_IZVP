@@ -1,0 +1,21 @@
+object frmChildProduct: TfrmChildProduct
+  Left = 414
+  Top = 188
+  Width = 789
+  Height = 396
+  Caption = #1055#1088#1086#1076#1091#1082#1090#1080
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Position = poDefault
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+end

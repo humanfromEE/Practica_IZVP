@@ -1,0 +1,4 @@
+SELECT Product_table.name_p AS назва_продукту;
+ FROM ;
+     product_table;
+ WHERE  Product_table.code_p NOT IN (SELECT code_p  FROM       database_file!product_table      INNER JOIN database_file!dish_table     ON  Product_table.code_p = Dish_table.code_p_d)

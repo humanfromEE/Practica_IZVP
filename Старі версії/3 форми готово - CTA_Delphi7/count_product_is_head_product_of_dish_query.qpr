@@ -1,0 +1,8 @@
+SELECT Product_table.name_p AS назва_продукту,;
+  COUNT(Dish_table.code_p_d) AS кількість_страв_де_продукт_головний;
+ FROM ;
+     product_table ;
+    INNER JOIN dish_table ;
+   ON  ( code_p ) = ( code_p_d );
+ GROUP BY Product_table.name_p;
+ ORDER BY 2 DESC

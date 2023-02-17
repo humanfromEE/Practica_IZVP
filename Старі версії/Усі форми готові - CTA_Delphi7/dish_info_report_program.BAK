@@ -1,0 +1,264 @@
+CLOSE TABLES ALL
+
+* Процедура видалення файлу для того, щоб не було вікна-попередження щодо перезапису файлу (якщо файл існує чи не був видалено фізично)
+IF (FILE('dish_info_report_free_table.dbf')) THEN
+	ERASE dish_info_report_free_table.dbf
+ENDIF
+
+SELECT name_d, composition_d, price_d, weight_d FROM dish_table;
+ORDER BY name_d;
+INTO TABLE dish_info_report_free_table
+
+DO FORM dish_info_report_form.scx
+_SCREEN.ActiveForm.Width = 965
+_SCREEN.ActiveForm.Height = 400
+CLEAR
+USE dish_info_report_free_table
+GOTO TOP
+
+lengthLineInForm = 160
+lengthLineInFormForDish = 240
+counterPage = 1
+xPointer = 0
+yPointer = 0
+yFieldNameDish = 10
+yFieldCompositionDish = 35 + yFieldNameDish 
+yFieldPriceDish = 70 + yFieldCompositionDish
+yFieldWeightDish = 40 + yFieldPriceDish 
+
+createHeaderForReport()
+
+countLinesForDish = 9
+counterLinesForDish = 0
+counterPages = 1
+
+setCaptionForm(counterPages, "")
+
+IF (NOT EOF()) THEN
+	DO WHILE (.T.)
+		@ xPointer, yFieldNameDish SAY name_d
+		* Пішов зріз поля для composition_d
+		@ xPointer, yFieldCompositionDish SAY compositio
+		@ xPointer, yFieldPriceDish SAY price_d
+		@ xPointer, yFieldWeightDish SAY weight_d
+		SKIP
+		xPointer = xPointer + 1 
+		@ xPointer, yPointer SAY createStringLine("-", lengthLineInFormForDish)
+		xPointer = xPointer + 1 
+		counterLinesForDish = counterLinesForDish + 1 
+		IF (counterLinesForDish = countLinesForDish OR EOF()) THEN
+			startWaitWindow(counterPages, "") 
+			CLEAR
+			
+			counterPages = counterPages + 1 
+			counterLinesForDish = 0 
+			setCaptionForm(counterPages, "")
+			
+			createHeaderForReport()
+		ENDIF
+		
+		* Вивід результатуючих даних
+		IF (EOF()) THEN 	
+			CLOSE TABLES ALL 
+			CLEAR	
+			createHeaderForResultReport()
+			IF (counterLinesForDish = countLinesForDish) THEN
+				counterPages = counterPages + 1
+			ENDIF
+			setCaptionForm(counterPages, "РЕЗУЛЬТАТ")
+			
+			yResultDataReport = 25
+			yResultDataValueReport = 70
+			@ xPointer, yResultDataReport SAY "Сума цін страв: "
+			@ xPointer, yResultDataValueReport SAY STR(searchSummPrice(), lengthIntegerNumber(searchSummPrice()) + 3, 2)
+			xPointer = xPointer + 1
+			@ xPointer, yResultDataReport SAY "Середня ціна страви: "
+			@ xPointer, yResultDataValueReport SAY STR(searchAvaragePrice(), lengthIntegerNumber(searchAvaragePrice()) + 3, 2)
+			xPointer = xPointer + 1
+			@ xPointer, yResultDataReport SAY "Кількість страв: "
+			@ xPointer, yResultDataValueReport SAY STR(searchCountDish(), lengthIntegerNumber(searchCountDish()), 0)
+			xPointer = xPointer + 1
+			@ xPointer, yResultDataReport SAY "Найменша ціна страви: "
+			@ xPointer, yResultDataValueReport SAY STR(searchMinPrice(), lengthIntegerNumber(searchMinPrice()) + 3, 2)
+			xPointer = xPointer + 1
+			@ xPointer, yResultDataReport SAY "Найбільша ціна страви: "
+			@ xPointer, yResultDataValueReport SAY STR(searchMaxPrice(), lengthIntegerNumber(searchMaxPrice()) + 3, 2)
+			xPointer = xPointer + 1
+			@ xPointer, yPointer SAY createStringLine("-", lengthLineInFormForDish)
+			startWaitWindow(counterPages, "РЕЗУЛЬТАТ") 
+			EXIT 
+		ENDIF
+	ENDDO
+ELSE
+	@ xPointer, yPointer SAY createStringSpace(100) + "НЕМАЄ СТРАВ - ЗАПОВНІТЬ ТАБЛИЦЮ"
+	xPointer = xPointer + 1 
+	@ xPointer, yPointer SAY createStringLine("-", lengthLineInFormForDish)
+	
+	startWaitWindow(counterPages, "ВИХІД") 
+	setCaptionForm(counterPages, "ВИХІД")
+ENDIF
+
+_SCREEN.ActiveForm.Release()
+CLOSE TABLES ALL 
+
+* ====================================================================================================
+* ====================================================================================================
+* ====================================================================================================
+
+* Пошук мінімальної ціни страви
+FUNCTION searchMinPrice
+	USE dish_info_report_free_table
+	GOTO TOP
+	minPrice = price_d
+	DO WHILE NOT EOF() 
+		SKIP
+		IF ((NOT EOF()) AND (minPrice > price_d) ) THEN
+			minPrice = price_d
+		ENDIF
+	ENDDO	
+	CLOSE TABLES ALL
+	RETURN ROUND(minPrice, 2)
+ENDFUNC
+
+
+* Пошук максимальної ціни страви
+FUNCTION searchMaxPrice
+	USE dish_info_report_free_table
+	GOTO TOP
+	maxPrice = price_d
+	DO WHILE NOT EOF() 
+		SKIP
+		IF ((NOT EOF()) AND (maxPrice < price_d) ) THEN
+			maxPrice = price_d
+		ENDIF
+	ENDDO	
+	CLOSE TABLES ALL
+	RETURN ROUND(maxPrice, 2)
+ENDFUNC
+
+* Пошук кількості страв
+FUNCTION searchCountDish
+	countDish = 0
+	USE dish_table
+	COUNT FOR a->code_d != "0000" TO countDish 
+	CLOSE TABLES ALL
+	RETURN countDish 
+ENDFUNC
+
+* Пошук суми страв
+FUNCTION searchSummPrice
+	summPrice = 0
+	USE dish_info_report_free_table
+	GOTO TOP
+	DO WHILE NOT EOF() 
+		summPrice = summPrice + price_d
+		SKIP
+	ENDDO	
+	CLOSE TABLES ALL
+	RETURN ROUND(summPrice, 2)
+ENDFUNC
+
+* Пошук середньої ціни страви
+FUNCTION searchAvaragePrice
+	RETURN ROUND( (searchSummPrice() / searchCountDish()), 2)
+ENDFUNC
+
+* Створення лінії
+FUNCTION createStringLine
+PARAMETERS symbolLine, lengthLine
+	stringLine = ""
+	FOR i = 1 TO lengthLine STEP 1
+		stringLine = stringLine + symbolLine
+	ENDFOR
+	RETURN stringLine
+ENDFUNC
+
+* Створення строки з пробілами
+FUNCTION createStringSpace
+PARAMETERS lengthLine
+	stringLine = ""
+	FOR i = 1 TO lengthLine STEP 1
+		stringLine = stringLine + " "
+	ENDFOR
+	RETURN stringLine
+ENDFUNC
+
+* Процедура створення шапки для звіту
+PROCEDURE createHeaderForReport
+	xCordinate = 0
+	yCordinate = 0
+
+	* Шапка звіту
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInForm) FONT "", 13 STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY "ІНФОРМАЦІЯ ПРО НАЯВНІ СТРАВИ" FONT "", 20 STYLE "B"
+	xCordinate = xCordinate + 2
+	@ xCordinate, yCordinate SAY createStringSpace(4) + "СТАНОМ НА " + TRANSFORM(DATE())
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInForm) FONT "", 13 STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yFieldNameDish SAY "Назва страви" FONT "" STYLE "B"
+	@ xCordinate, yFieldCompositionDish SAY "Склад страви" FONT "" STYLE "B"
+	@ xCordinate, yFieldPriceDish SAY "Ціна страви" FONT "" STYLE "B"
+	@ xCordinate, yFieldWeightDish SAY "Вага страви" FONT "" STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInForm) FONT "", 13 STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInFormForDish)
+	xCordinate = xCordinate + 1
+	
+	xPointer = xCordinate
+ENDPROC
+
+* Процедура створення шапки для звіту в результатах звіту
+PROCEDURE createHeaderForResultReport
+	xCordinate = 0
+	yCordinate = 0
+
+	* Шапка звіту
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInForm) FONT "", 13 STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY "ІНФОРМАЦІЯ ПРО НАЯВНІ СТРАВИ" FONT "", 20 STYLE "B"
+	xCordinate = xCordinate + 2
+	@ xCordinate, yCordinate SAY createStringSpace(4) + "СТАНОМ НА " + TRANSFORM(DATE())
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInForm) FONT "", 13 STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yFieldNameDish SAY createStringSpace(80) + "РЕЗУЛЬТАТИ ЗВІТУ" FONT "" STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInForm) FONT "", 13 STYLE "B"
+	xCordinate = xCordinate + 1
+	@ xCordinate, yCordinate SAY createStringLine("-", lengthLineInFormForDish)
+	xCordinate = xCordinate + 1
+	
+	xPointer = xCordinate
+ENDPROC
+
+* Функція повернення довжини числа: 100 - 3; -100 - 4; 0 - 1 і т. д.
+FUNCTION lengthIntegerNumber 
+PARAMETERS intNumber
+	positiveIntNumber = ABS(intNumber)
+	powerTen = 1
+	DO WHILE (.T.)
+		IF (positiveIntNumber < 10 ^ powerTen) THEN
+			IF (intNumber < 0) THEN
+				powerTen = powerTen + 1
+			ENDIF
+			RETURN powerTen
+		ELSE
+			powerTen = powerTen + 1
+		ENDIF
+	ENDDO
+ENDFUNC
+
+* Процедура зміни заголовку для форми
+PROCEDURE setCaptionForm
+PARAMETERS numberPage, messageInEnd
+	_SCREEN.ActiveForm.Caption = "ІНФОРМАЦІЯ ПРО НАЯВНІ СТРАВИ - " + "Сторінка № " + STR(numberPage, lengthIntegerNumber(numberPage), 0) + "  " +  messageInEnd
+ENDPROC
+
+* Процедура запуску вікна очікування
+PROCEDURE startWaitWindow
+PARAMETERS numberPage, messageInEnd
+	WAIT WINDOW "Сторінка № " + STR(numberPage, lengthIntegerNumber(numberPage), 0) + "  " + messageInEnd
+ENDPROC

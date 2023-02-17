@@ -1,0 +1,19 @@
+CLOSE ALL TABLES
+
+ON KEY LABEL CTRL+Y APPEND BLANK
+
+SELECT a
+USE type_product_table
+SET ORDER TO TAG code_tp
+GOTO TOP
+
+BROWSE TITLE 'Таблиця ПРОДУКТИ - Долучення даних: CTRL+Y; Вихід: Escape';
+	FIELDS;
+		code_tp:H = '',;
+		name_tp:H = ''
+
+PACK
+
+CLOSE ALL 
+
+RETURN

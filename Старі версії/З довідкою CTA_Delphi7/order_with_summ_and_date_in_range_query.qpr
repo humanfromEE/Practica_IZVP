@@ -1,0 +1,10 @@
+SELECT Order_table.code_o AS код_замовлення,;
+  SUM(Dish_table.price_d) AS сума_замовлення;
+ FROM ;
+     dish_table ;
+    INNER JOIN order_table ;
+   ON  ( code_d ) = Order_table.code_d_o;
+ WHERE  ( date_o ) IN (DATE(2023,1,31),DATE(2023,2,1),DATE(2023,2,7));
+   OR  ( date_o ) BETWEEN DATE(2023,1,24) AND DATE(2023,1,28);
+ GROUP BY Order_table.code_o
+

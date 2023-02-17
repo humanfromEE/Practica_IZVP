@@ -1,0 +1,9 @@
+SELECT Provider_table.code_pv AS код_постачальника,;
+  Provider_table.number_pv AS номер_постачальника,;
+  Provider_table.address_pv AS адреса_постачальника,;
+  Provider_table.name_pv AS назва_постачальника;
+ FROM ;
+     provider_table;
+ WHERE  ( address_pv ) LIKE ( "%Ћьв≥в%" );
+   OR  ( address_pv ) LIKE ( "%льв≥в%" );
+ ORDER BY Provider_table.name_pv

@@ -1,0 +1,6 @@
+
+SELECT Type_dish_table.code_td AS код_виду_страви,;
+  Type_dish_table.name_td AS назва_виду_страви;
+ FROM ;
+     type_dish_table;
+ WHERE   Exists (SELECT * FROM dish_table WHERE code_td = code_td_d AND (composition_d LIKE "%ЛИМОН%" OR composition_d LIKE "%лимон%" OR composition_d LIKE "%Лимон%"))

@@ -1,0 +1,8 @@
+SELECT Worker_table.code_w AS код_працівника,;
+  Worker_table.fullname_w AS піп_працівника,;
+  Worker_table.number_w AS номер_працівника,;
+  Worker_table.salary_w AS зарплата_працівника;
+ FROM ;
+     worker_table;
+ WHERE  ( salary_w ) >= (SELECT AVG(salary_w) FROM worker_table)
+  

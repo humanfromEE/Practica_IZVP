@@ -1,0 +1,7 @@
+SELECT Order_table.code_o AS код_замовлення,;
+  SUM(Dish_table.price_d) AS сума_замовлення;
+ FROM ;
+     dish_table ;
+    INNER JOIN order_table ;
+   ON  ( code_d ) = ( code_d_o );
+ GROUP BY Order_table.code_o
