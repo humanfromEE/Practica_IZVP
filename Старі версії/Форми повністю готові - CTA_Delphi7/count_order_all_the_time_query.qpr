@@ -1,0 +1,3 @@
+SELECT COUNT(DISTINCT (code_o)) AS кількість_замовлень;
+ FROM ;
+     order_table

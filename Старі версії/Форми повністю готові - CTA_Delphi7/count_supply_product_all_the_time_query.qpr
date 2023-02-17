@@ -1,0 +1,3 @@
+SELECT COUNT(DISTINCT (code_sp)) AS кількість_постачань;
+ FROM ;
+     supply_product_table

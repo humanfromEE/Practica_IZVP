@@ -1,0 +1,2 @@
+CLOSE ALL 
+QUIT
