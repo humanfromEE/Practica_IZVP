@@ -113,7 +113,7 @@ object frmChildSupplyProduct: TfrmChildSupplyProduct
       object dbgrd1: TDBGrid
         Left = 0
         Top = 0
-        Width = 329
+        Width = 385
         Height = 314
         Align = alLeft
         Color = clWhite
@@ -124,6 +124,38 @@ object frmChildSupplyProduct: TfrmChildSupplyProduct
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'code_sp'
+            Title.Caption = #1050#1086#1076
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'code_pv_sp'
+            Title.Caption = #1050#1086#1076'_'#1087#1086#1089#1090#1072#1095#1072#1083#1100#1085#1080#1082#1072
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'code_p_sp'
+            Title.Caption = #1050#1086#1076'_'#1087#1088#1086#1076#1091#1082#1090#1091
+            Width = 81
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'date_sp'
+            Title.Caption = #1044#1072#1090#1072
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'count_sp'
+            Title.Caption = #1050#1110#1083#1100#1082#1110#1089#1090#1100
+            Visible = True
+          end>
       end
       object edtInputCodeRecord: TEdit
         Left = 525
@@ -147,7 +179,7 @@ object frmChildSupplyProduct: TfrmChildSupplyProduct
         TabOrder = 4
       end
       object btnGoToRecord: TButton
-        Left = 464
+        Left = 480
         Top = 120
         Width = 193
         Height = 25
@@ -156,7 +188,7 @@ object frmChildSupplyProduct: TfrmChildSupplyProduct
         OnClick = btnGoToRecordClick
       end
       object btnGoToRecordWithCodeDish: TButton
-        Left = 432
+        Left = 448
         Top = 152
         Width = 257
         Height = 25
@@ -165,7 +197,7 @@ object frmChildSupplyProduct: TfrmChildSupplyProduct
         OnClick = btnGoToRecordWithCodeDishClick
       end
       object btnGoToRecordWithCodeWorker: TButton
-        Left = 432
+        Left = 448
         Top = 184
         Width = 257
         Height = 25
@@ -174,7 +206,7 @@ object frmChildSupplyProduct: TfrmChildSupplyProduct
         OnClick = btnGoToRecordWithCodeWorkerClick
       end
       object btnGoToRecordWithWorkerAndDishRecord: TButton
-        Left = 400
+        Left = 416
         Top = 216
         Width = 321
         Height = 25
@@ -183,7 +215,7 @@ object frmChildSupplyProduct: TfrmChildSupplyProduct
         OnClick = btnGoToRecordWithWorkerAndDishRecordClick
       end
       object btnClearInputField: TButton
-        Left = 464
+        Left = 480
         Top = 272
         Width = 193
         Height = 25
